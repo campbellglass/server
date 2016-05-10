@@ -23,19 +23,29 @@ func main() {
 	LocalAddr, err := net.ResolveUDPAddr(UDPTYPE, ":0")
 	FailIf(err)
 
-	// Connect
+	// Connect to Server from Local
 	Conn, err := net.DialUDP(UDPTYPE, LocalAddr, ServerAddr)
 	FailIf(err)
 	defer Conn.Close()
 
 	// Send data
-	i := 0
-	for {
+	buffer := make([]byte, BUFSIZE)
+	for i := 0; true; i += 1 {
+		// Create request
 		toSend := []byte(strconv.Itoa(i))
+
+		// Send request
 		fmt.Printf("Sending %s\n", string(toSend))
 		Conn.Write(toSend)
-		time.Sleep(DOWNTIME)
-		i += 1
-	}
 
+		// Wait for response packet
+		packetLen, err := Conn.Read(buffer)
+		FailIf(err)
+
+		// Handle response packet
+		fmt.Printf("Received '%s'\n", string(buffer[:packetLen]))
+
+		// Wait for next request
+		time.Sleep(DOWNTIME)
+	}
 }

@@ -24,8 +24,7 @@ func main() {
 	// read in input
 	buffer := make([]byte, BUFSIZE)
 	for {
-		fmt.Println("Waiting for next packet")
-		// read input
+		// read next incoming packet
 		packetLen, retAddr, err := ServerConn.ReadFromUDP(buffer)
 		_ = retAddr // don't respond yet
 		FailIf(err)
@@ -33,7 +32,11 @@ func main() {
 		// get packet
 		packet := buffer[:packetLen]
 
-		fmt.Printf("Got a packet: '%s'\n", string(packet))
-	}
+		// make response
+		toSend := []byte("Thank you for '" + string(packet) + "'")
 
+		// respond to packet
+		fmt.Printf("Got a packet: '%s'\n", string(packet))
+		ServerConn.WriteToUDP(toSend, retAddr)
+	}
 }
