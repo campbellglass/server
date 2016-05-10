@@ -5,13 +5,15 @@ import (
 	"log"
 	"net"
 	"os"
+	"time"
 )
 
 const (
-	PORT    = 24601       // The port to run the server on
-	IP      = "127.0.0.1" // The IP to run the server on
-	UDPTYPE = "udp"       // The type of udp to use
-	BUFSIZE = 1024        // The size of the buffer for incoming packets
+	PORT     = 24601           // The port to run the server on
+	IP       = "127.0.0.1"     // The IP to run the server on
+	UDPTYPE  = "udp"           // The type of udp to use
+	BUFSIZE  = 1024            // The size of the buffer for incoming packets
+	DOWNTIME = 1 * time.Second // The amount of time to wait between client sendings
 )
 
 // Fails fatally if an error is present

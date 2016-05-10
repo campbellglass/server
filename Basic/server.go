@@ -12,7 +12,7 @@ func main() {
 	FailIf(err)
 
 	// Bind to a port
-	ServerAddr, err := net.ResolveUDPAddr(UDPTYPE, myIP+":"+strconv.Itoa(PORT))
+	ServerAddr, err := net.ResolveUDPAddr(UDPTYPE, myIP+":"+strconv.Itoa(PORT)) // might need to drop the IP prependiction
 	FailIf(err)
 
 	// Listen on the port
