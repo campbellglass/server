@@ -1,4 +1,4 @@
-// A library for performing Automatic Reqpeat Requests
+// A library for performing Automatically Repeated Requests
 
 package main
 
@@ -21,14 +21,18 @@ func main() {
 // If no correct response is received before timing out, resends the response
 // If a correct response is received before timing out, exits successfully
 func arq(responseChannel chan bool) {
-	// send request
 	success := false
+	// send request and wait for correct response
 	for success {
+		// send request
 		select {
 		case <-responseChannel:
+			// check for response correctness
 			fmt.Println("got response")
+			// if correct, indicate success
 			success = true
 		case <-time.After(TIMEOUT):
+			// if timeout, try again
 			fmt.Println("got timeout")
 		}
 	}
