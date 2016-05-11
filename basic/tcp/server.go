@@ -38,12 +38,13 @@ func main() {
 
 			// get packet
 			packet := buffer[:packetLen]
+			fmt.Printf("Got a packet: '%s'\n", string(packet))
 
 			// make response
-			toSend := []byte("Thank you for " + string(packet))
+			toSend := []byte("Thank you for\n" + string(packet))
 
 			// respond to packet
-			fmt.Printf("Got a packet: '%s'\n", string(packet))
+			fmt.Printf("Sending: '%s'\n", string(toSend))
 			_, err = ClientConn.Write(toSend)
 			if err != nil {
 				break
